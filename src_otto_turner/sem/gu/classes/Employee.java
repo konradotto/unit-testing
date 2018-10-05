@@ -16,7 +16,7 @@ abstract class Employee {
     private String name;
     private double grossSalary;
     private double netSalary;
-    private TaxingScheme taxingScheme;
+    protected TaxingScheme taxingScheme;
 
     protected Employee(String name, double grossSalary) {
         id = UUID.randomUUID();
