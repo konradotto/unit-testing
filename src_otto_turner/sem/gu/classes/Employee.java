@@ -79,6 +79,7 @@ abstract class Employee {
     }
 
     public void setTaxingScheme(TaxingScheme taxingScheme) {
+        setNetSalary(grossSalary);
         this.taxingScheme = taxingScheme;
     }
 }
