@@ -15,6 +15,8 @@ abstract class Employee {
     private final UUID id;
     private String name;
     private double grossSalary;
+    private double netSalary;
+    private TaxingScheme taxingScheme;
 
     protected Employee(String name, double grossSalary) {
         id = UUID.randomUUID();
@@ -58,6 +60,25 @@ abstract class Employee {
     }
 
     public void setGrossSalary(double grossSalary) {
+        this.netSalary = taxingScheme.calculateNetSalary(grossSalary);
         this.grossSalary = grossSalary;
+    }
+
+    public double getNetSalary() {
+        return netSalary;
+    }
+
+    //TODO this should never be used - should we remove it?
+    // (Not sure whether Francisco wanted us to have this kind of thing)
+    public void setNetSalary(double netSalary) {
+        this.netSalary = netSalary;
+    }
+
+    public TaxingScheme getTaxingScheme() {
+        return taxingScheme;
+    }
+
+    public void setTaxingScheme(TaxingScheme taxingScheme) {
+        this.taxingScheme = taxingScheme;
     }
 }
