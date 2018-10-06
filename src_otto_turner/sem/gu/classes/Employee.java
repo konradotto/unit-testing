@@ -18,7 +18,7 @@ public class Employee {
     private double netSalary;
     protected TaxingScheme taxingScheme;
 
-    public Employee(String name, double grossSalary) {
+    protected Employee(String name, double grossSalary) {
         id = UUID.randomUUID();
         this.name = name;
         this.grossSalary = grossSalary;
