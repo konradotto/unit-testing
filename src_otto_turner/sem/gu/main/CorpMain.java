@@ -4,16 +4,20 @@ import java.io.PrintStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import sem.gu.classes.Employee;
 import sem.gu.exceptions.NegativeInputException;
 
 public class CorpMain {
 	
 	//GLOBAL VARIABLES
-	PrintStream ps;
-	Scanner scan;
+	private PrintStream ps;
+	private Scanner scan;
+	private Employee[] employees;
 	
 	//CONSTANTS
 	private final int NO_SELECTION = -1;
+	private final int NUM_EMPLOYEES = 0;
+	private final int MAX_NUM_EMPLOYEES = 10;
 	
 	//MENU CONSTANTS
 	private final int REGISTER = 1;
@@ -24,6 +28,9 @@ public class CorpMain {
 	public CorpMain() {
 		ps = new PrintStream(System.out);
 		scan = new Scanner(System.in);
+		
+		this.employees = new Employee[MAX_NUM_EMPLOYEES];
+		
 	}
 	
 	public int inputInteger(String message) {
@@ -57,27 +64,42 @@ public class CorpMain {
 			
 			switch(option) {
 				case REGISTER:
+					ps.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n",REGISTER);
+					ps.println(">>>");
 					break;
 				case REMOVE:
+					ps.printf(">>> OPTION %d SELECTED: REMOVING AN EMPLOYEE%n",REMOVE);
+					ps.println(">>>");
 					break;
 				case RETRIEVE:
+					ps.printf(">>> OPTION %d SELECTED: RETRIEVING AN EMPLOYEE%n",RETRIEVE);
+					ps.println(">>>");
 					break;
 				case QUIT:
+					ps.printf(">>> OPTION %d SELECTED: EXITING SYSTEM%n",QUIT);
+					ps.println(">>> HAVE A NICE DAY...");
 					break;
 				default:
 					break;
 			}
 		} while (option != QUIT);
-		
 	}
 	
 	public void printMenu() {
 		ps.println(">>> WELCOME TO REUSAX CORP EMPLOYEE SYSTEM.");
 		ps.println(">>> CHOOSE AN OPTION BELOW.");
 		ps.println(">>>");
-		ps.println(">>> 1.  REGISTER AN EMPLOYEE.");
-		ps.println(">>> 2.  REMOVE AN EMPLOYEE.");
+		ps.println(">>> 1. REGISTER AN EMPLOYEE.");
+		ps.println(">>> 2. REMOVE AN EMPLOYEE.");
 		ps.println(">>> 4. QUIT.");
+	}
+	
+	public void registerEmployee() {
+		
+	}
+	
+	public void removeEmployee() {
+		
 	}
 	
 	public static void main(String[] args) {

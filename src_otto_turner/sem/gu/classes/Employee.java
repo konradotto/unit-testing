@@ -10,7 +10,7 @@ import java.util.UUID;
  * @version 1.0
  * @since 2018-10-06
  */
-abstract class Employee {
+public class Employee {
 
     private final UUID id;
     private String name;
