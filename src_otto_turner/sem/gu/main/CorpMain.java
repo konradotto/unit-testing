@@ -13,10 +13,10 @@ public class CorpMain {
 	private PrintStream ps;
 	private Scanner scan;
 	private Employee[] employees;
+	private int numEmployees;
 	
 	//CONSTANTS
 	private final int NO_SELECTION = -1;
-	private final int NUM_EMPLOYEES = 0;
 	private final int MAX_NUM_EMPLOYEES = 10;
 	
 	//MENU CONSTANTS
@@ -29,9 +29,33 @@ public class CorpMain {
 		ps = new PrintStream(System.out);
 		scan = new Scanner(System.in);
 		
+		numEmployees = 0;
 		this.employees = new Employee[MAX_NUM_EMPLOYEES];
 		
 	}
+	
+	public double inputDouble(String message) {
+    	double inputDouble = NO_SELECTION; //Set default values
+    	while(inputDouble == NO_SELECTION) {
+    		ps.println(message);
+        	try {
+        		inputDouble = scan.nextDouble(); //attempt to take in a double
+        		if(inputDouble < 0) {
+        			//entered value cannot be negative
+        			throw new NegativeInputException();
+        		}
+        	} catch(InputMismatchException ex) {
+                inputDouble = -1.0;
+                ps.printf("InputMismatchException caught. Your input could not be parsed into a double.%n");
+            } catch (NegativeInputException ex) {
+        		inputDouble = -1.0;
+        		ps.printf("%s%n", ex.getMessage());
+        	} finally {
+                scan.nextLine();
+            }
+    	}
+    	return inputDouble;
+    }
 	
 	public int inputInteger(String message) {
 		int inputInt = NO_SELECTION; //Set default values
@@ -56,6 +80,20 @@ public class CorpMain {
     	return inputInt;
 	}
 	
+	public String inputString(String message) {
+    	String inputString = ""; //Set default value
+    	while(inputString.equals("")) {
+    		ps.println(message); 
+    		inputString = scan.nextLine();
+    		if(inputString.equals("") || inputString.equals(" ")) {
+    			//if entered string is empty of just a space, loop again
+    			inputString = "";
+    			ps.println("Entered value is invalid, value must have at least 1 character that is not a space");
+    		}
+    	}
+    	return inputString;
+    }
+	
 	public void run() {
 		int option;
 		printMenu();
@@ -66,6 +104,14 @@ public class CorpMain {
 				case REGISTER:
 					ps.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n",REGISTER);
 					ps.println(">>>");
+					if(numEmployees >= MAX_NUM_EMPLOYEES) {
+						ps.println(">>> ERROR: MAX NUMBER OF EMPLOYEES REACHED. REMOVE EMPLOYEES BEFORE ADDING MORE");
+					} else {
+						Employee employee = registerEmployee();
+						numEmployees += 1;
+						employees[numEmployees] = employee;
+						ps.printf(">>> EMPLOYEE REGISTERED. THERE IS NOW %d EMPLOYEE(S) REGISTERED%n",numEmployees);
+					}
 					break;
 				case REMOVE:
 					ps.printf(">>> OPTION %d SELECTED: REMOVING AN EMPLOYEE%n",REMOVE);
@@ -94,8 +140,14 @@ public class CorpMain {
 		ps.println(">>> 4. QUIT.");
 	}
 	
-	public void registerEmployee() {
+	public Employee registerEmployee() {
+		String name = inputString(">>> PLEASE ENTER EMPLOYEES NAME");
+		double grossSalary = inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
 		
+		ps.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
+		Employee employee = new Employee(name,grossSalary);
+		ps.println(">>> EMPLOYEE CREATION SUCCESSFULL");
+		return employee;
 	}
 	
 	public void removeEmployee() {
