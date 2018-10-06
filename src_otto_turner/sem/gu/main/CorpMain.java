@@ -19,11 +19,17 @@ public class CorpMain {
 	private final int NO_SELECTION = -1;
 	private final int MAX_NUM_EMPLOYEES = 10;
 	
-	//MENU CONSTANTS
+	//MAIN MENU CONSTANTS
 	private final int REGISTER = 1;
 	private final int REMOVE = 2;
 	private final int RETRIEVE = 3;
 	private final int QUIT = 4;
+	
+	//REGISTER EMPLOYEE MENU CONSTANTS
+	private final int EMPLOYEE = 1;
+	private final int INTERN = 2;
+	private final int MANAGER = 3;
+	private final int DIRECTOR = 4;
 	
 	public CorpMain() {
 		ps = new PrintStream(System.out);
@@ -126,28 +132,57 @@ public class CorpMain {
 					ps.println(">>> HAVE A NICE DAY...");
 					break;
 				default:
+					ps.println(">>> ERROR: INVALID OPTION SELECTED");
 					break;
 			}
 		} while (option != QUIT);
 	}
 	
 	public void printMenu() {
-		ps.println(">>> WELCOME TO REUSAX CORP EMPLOYEE SYSTEM.");
-		ps.println(">>> CHOOSE AN OPTION BELOW.");
+		ps.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
+		ps.println(">>> CHOOSE AN OPTION BELOW");
 		ps.println(">>>");
-		ps.println(">>> 1. REGISTER AN EMPLOYEE.");
-		ps.println(">>> 2. REMOVE AN EMPLOYEE.");
-		ps.println(">>> 4. QUIT.");
+		ps.println(">>> 1. REGISTER AN EMPLOYEE");
+		ps.println(">>> 2. REMOVE AN EMPLOYEE");
+		ps.println(">>> 4. QUIT");
+		ps.println(">>>");
 	}
 	
 	public Employee registerEmployee() {
-		String name = inputString(">>> PLEASE ENTER EMPLOYEES NAME");
-		double grossSalary = inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
-		
-		ps.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
-		Employee employee = new Employee(name,grossSalary);
-		ps.println(">>> EMPLOYEE CREATION SUCCESSFULL");
+		Employee employee = null;
+		int option = NO_SELECTION;
+		do {
+			printEmployeeRegisterMenu();
+			option = inputInteger(">>> TYPE OPTION CHOICE");
+			switch(option) {
+				case EMPLOYEE:
+					String name = inputString(">>> PLEASE ENTER EMPLOYEES NAME");
+					double grossSalary = inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
+					ps.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
+					employee = new Employee(name,grossSalary);
+					ps.println(">>> EMPLOYEE CREATION SUCCESSFULL");
+					break;
+				case INTERN:
+					break;
+				case MANAGER:
+					break;
+				case DIRECTOR:
+					break;
+				default:
+					ps.println(">>> ERROR: INVALID OPTION SELECTED");
+					option = NO_SELECTION;
+					break;
+			}
+		} while (option == NO_SELECTION);
 		return employee;
+	}
+	
+	public void printEmployeeRegisterMenu() {
+		ps.println(">>> CHOOSE WHAT TYPE OF EMPLOYEE YOU WISH TO ADD");
+		ps.println(">>> 1. REGULAR EMPLOYEE");
+		ps.println(">>> 2. INTERN");
+		ps.println(">>> 3. MANAGER");
+		ps.println(">>> 4. DIRECTOR");
 	}
 	
 	public void removeEmployee() {
