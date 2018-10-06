@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class Employee {
 
-    private final UUID id;
+    private final UUID id; //id needs to be set by the user not the program
     private String name;
     private double grossSalary;
     private double netSalary;
@@ -34,7 +34,6 @@ public class Employee {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id);
     }
 

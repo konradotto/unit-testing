@@ -6,6 +6,9 @@ public class RegularEmployee extends Employee {
         super(name, grossSalary);
         //taxingScheme = StandarTax;      //TODO: implement this
     }
+	
+	//is this worth having as its own class?
+	//surely there is no difference between this and the default employee class
 
     //TODO: further functionalities of StandardEmployee
 }

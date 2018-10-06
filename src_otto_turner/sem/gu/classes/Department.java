@@ -1,5 +1,5 @@
 package sem.gu.classes;
 
 public enum Department {
-	HR,TECHNICAL,BUSINESS;
+	HR,TECHNICAL,BUSINESS,NA;
 }
