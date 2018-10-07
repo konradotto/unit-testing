@@ -49,6 +49,30 @@ public class Employee {
     		return false;
     	}
     }
+    
+    public boolean isManager() {
+    	if(this instanceof Manager) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public boolean isIntern() {
+    	if(this instanceof Intern) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public boolean isRegularEmployee() {
+    	if(this instanceof RegularEmployee) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 
     public int getId() {
         return id;
