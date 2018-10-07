@@ -24,12 +24,12 @@ public class Employee {
         this.grossSalary = grossSalary;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Employee)) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
+    public boolean equals(int id) {
+        if(id == this.getId()) {
+        	return true;
+        } else {
+        	return false;
+        }
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return String.format("%s's gross salary is of %.2f SEK per month.");
+        return String.format("%d's gross salary is of %.2f SEK per month.",this.id,this.grossSalary);
     }
     
     public boolean isDirector() {

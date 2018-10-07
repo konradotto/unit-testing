@@ -151,6 +151,11 @@ public class CorpMain {
 			case RETRIEVE:
 				ps.printf(">>> OPTION %d SELECTED: RETRIEVING AN EMPLOYEE%n", RETRIEVE);
 				ps.println(">>>");
+				int id = inputInteger(">>> ENTER THE ID OF THE EMPLOYEE");
+				Employee em = retrieveEmployee(id);
+				if(em != null) {
+					ps.println(em.toString());
+				}
 				break;
 			case DIR_BENEFIT:
 				ps.printf(">>> OPTION %d SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
@@ -281,7 +286,7 @@ public class CorpMain {
 		} while (department == Department.NA);
 		return department;
 	}
-
+	
 	//--- Remove Employee
 
 	public void removeEmployee() {
@@ -305,7 +310,7 @@ public class CorpMain {
 		}
 	}
 
-	//--- Set director benefits
+	//--- Set Director Benefits
 
 	public void setDirectorBenefits() {
 		double benefit = inputDouble(">>> ENTER NEW BENEFIT AMOUNT");
