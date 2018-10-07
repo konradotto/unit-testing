@@ -12,14 +12,14 @@ import java.util.UUID;
  */
 public class Employee {
 
-    private final UUID id; //id needs to be set by the user not the program
+    private int id; //id needs to be set by the user not the program
     private String name;
     private double grossSalary;
     private double netSalary;
     protected TaxingScheme taxingScheme;
 
-    public Employee(String name, double grossSalary) {
-        id = UUID.randomUUID();
+    public Employee(String name, double grossSalary, int id) {
+        this.id = id;
         this.name = name;
         this.grossSalary = grossSalary;
     }
@@ -41,8 +41,16 @@ public class Employee {
     public String toString() {
         return String.format("%s's gross salary is of %.2f SEK per month.");
     }
+    
+    public boolean isDirector() {
+    	if(this instanceof Director) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

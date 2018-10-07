@@ -127,9 +127,10 @@ public class CorpMain {
 	// --- Main Menu
 
 	public void run() {
+		ps.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
-		printMenu();
 		do {
+			printMenu();
 			option = inputInteger(">>> TYPE OPTION NUMBER");
 
 			switch (option) {
@@ -152,8 +153,10 @@ public class CorpMain {
 				ps.println(">>>");
 				break;
 			case DIR_BENEFIT:
-				ps.printf(">>> OPTION %D SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
+				ps.printf(">>> OPTION %d SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
+				setDirectorBenefits();
 				ps.println(">>>");
+				break;
 			case QUIT:
 				ps.printf(">>> OPTION %d SELECTED: EXITING SYSTEM%n", QUIT);
 				ps.println(">>> HAVE A NICE DAY...");
@@ -166,7 +169,6 @@ public class CorpMain {
 	}
 
 	public void printMenu() {
-		ps.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		ps.println(">>> CHOOSE AN OPTION BELOW");
 		ps.println(">>>");
 		ps.println(">>> 1. REGISTER AN EMPLOYEE");
@@ -185,27 +187,28 @@ public class CorpMain {
 		do {
 			String name = inputString(">>> PLEASE ENTER EMPLOYEES NAME");
 			double grossSalary = inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
+			int id = inputInteger(">>> PLEASE ENTER EMPLOYEES IDENTIFICATION NUMBER");
 			printEmployeeRegisterMenu();
 			option = inputInteger(">>> TYPE OPTION CHOICE");
 			switch (option) {
 			case EMPLOYEE:
 				ps.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
-				employee = new RegularEmployee(name, grossSalary);
+				employee = new RegularEmployee(name, grossSalary,id);
 				ps.println(">>> EMPLOYEE CREATION SUCCESSFULL");
 				break;
 			case INTERN:
 				ps.println(">>> ATTEMPTING TO CREATE INTERN...");
-				employee = createIntern(name, grossSalary);
+				employee = createIntern(name, grossSalary,id);
 				ps.println(">>> INTERN CREATION SUCCESSFULL");
 				break;
 			case MANAGER:
 				ps.println(">>> ATTEMPTING TO CREATE MANAGER...");
-				employee = createManager(name, grossSalary);
+				employee = createManager(name, grossSalary,id);
 				ps.println(">>> MANAGER CREATION SUCCESSFULL");
 				break;
 			case DIRECTOR:
 				ps.println(">>> ATTEMPTING TO CREATE DIRECTOR...");
-				employee = createDirector(name, grossSalary);
+				employee = createDirector(name, grossSalary,id);
 				ps.println(">>> DIRECTOR CREATION SUCCESSFULL");
 				break;
 			default:
@@ -225,27 +228,27 @@ public class CorpMain {
 		ps.println(">>> 4. DIRECTOR");
 	}
 
-	public Intern createIntern(String name, double grossSalary) {
+	public Intern createIntern(String name, double grossSalary, int id) {
 		int gpa = NO_SELECTION;
 		do {
 			gpa = inputInteger(">>> PLEASE ENTER THE GPA (0-10) OF THE INTERN");
 			if (gpa < 0 || gpa > 10)
 				gpa = NO_SELECTION;
 		} while (gpa == NO_SELECTION);
-		Intern intern = new Intern(name, grossSalary, gpa);
+		Intern intern = new Intern(name, grossSalary, id, gpa);
 		return intern;
 	}
 
-	public Manager createManager(String name, double grossSalary) {
+	public Manager createManager(String name, double grossSalary, int id) {
 		DegreeType degree = retrieveDegreeType();
-		Manager manager = new Manager(name, grossSalary, degree);
+		Manager manager = new Manager(name, grossSalary, id, degree);
 		return manager;
 	}
 
-	public Director createDirector(String name, double grossSalary) {
+	public Director createDirector(String name, double grossSalary, int id) {
 		DegreeType degree = retrieveDegreeType();
 		Department department = retrieveDepartment();
-		Director director = new Director(name, grossSalary, degree, department, dirBenefit);
+		Director director = new Director(name, grossSalary, id, degree, department, dirBenefit);
 		return director;
 	}
 
@@ -279,7 +282,7 @@ public class CorpMain {
 		return department;
 	}
 
-	// ---Remove Employee
+	//--- Remove Employee
 
 	public void removeEmployee() {
 		int id = inputInteger(">>> ENTER THE ID OF THE EMPLOYEE TO DELETE");
@@ -302,6 +305,19 @@ public class CorpMain {
 		}
 	}
 
+	//--- Set director benefits
+
+	public void setDirectorBenefits() {
+		double benefit = inputDouble(">>> ENTER NEW BENEFIT AMOUNT");
+		for(int i=0;i<employees.size();i++) {
+			if(employees.get(i).isDirector()) {
+				Director dir = (Director) employees.get(i);
+				dir.setBenefit(benefit);
+				ps.printf(">>> DIRECTOR %d NEW BENEFIT SET%n",dir.getId());
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		CorpMain program = new CorpMain();
 		program.run();

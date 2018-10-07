@@ -2,8 +2,8 @@ package sem.gu.classes;
 
 public class RegularEmployee extends Employee {
 
-	public RegularEmployee(String name, double grossSalary) {
-        super(name, grossSalary);
+	public RegularEmployee(String name, double grossSalary,int id) {
+        super(name, grossSalary,id);
         //taxingScheme = StandarTax;      //TODO: implement this
     }
 	

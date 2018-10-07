@@ -4,8 +4,8 @@ public class Manager extends Employee{
 	
 	private DegreeType degree;
 
-	public Manager(String name, double grossSalary, DegreeType degree) {
-		super(name,grossSalary);
+	public Manager(String name, double grossSalary, int id, DegreeType degree) {
+		super(name,grossSalary,id);
 		this.degree = degree;
 	}
 	

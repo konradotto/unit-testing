@@ -5,8 +5,8 @@ public class Director extends Manager{
 	private Department department;
 	private double benefit;
 	
-	public Director(String name, double grossSalary,DegreeType degree, Department department, double benefit) {
-		super(name, grossSalary,degree);
+	public Director(String name, double grossSalary, int id, DegreeType degree, Department department, double benefit) {
+		super(name, grossSalary, id, degree);
 		this.department = department;
 		this.benefit = benefit;
 	}
