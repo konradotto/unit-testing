@@ -41,6 +41,10 @@ public class CorpMain {
 	private final int MANAGER = 3;
 	private final int DIRECTOR = 4;
 
+	// UPDATE EMPLOYEE MENU CONSTANTS
+	private final int NAME = 1;
+	private final int SALARY = 2;
+
 	public CorpMain() {
 		this.ps = new PrintStream(System.out);
 		this.scan = new Scanner(System.in);
@@ -128,7 +132,6 @@ public class CorpMain {
 	// --- Check Existing
 
 	public boolean checkEmployeeExists(int id) {
-		Employee em = null;
 		for (Employee em : employees) {
 			if (em.equals(id)) {
 				return true;
@@ -145,7 +148,6 @@ public class CorpMain {
 		do {
 			printMenu();
 			option = inputInteger(">>> TYPE OPTION NUMBER");
-
 			switch (option) {
 			case REGISTER:
 				ps.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n", REGISTER);
@@ -172,6 +174,7 @@ public class CorpMain {
 			case UPDATE_INFO:
 				ps.printf(">>> OPTION %d SELECTED: UPDATE EMPLOYEE INFO", UPDATE_INFO);
 				ps.println(">>>");
+				updateInfo();
 				break;
 			case DIR_BENEFIT:
 				ps.printf(">>> OPTION %d SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
@@ -196,8 +199,9 @@ public class CorpMain {
 		ps.println(">>> 1. REGISTER AN EMPLOYEE");
 		ps.println(">>> 2. REMOVE AN EMPLOYEE");
 		ps.println(">>> 3. PRINT AN EMPLOYEE'S DETAILS");
-		ps.println(">>> 4. SET DIRECTOR BENEFIT");
-		ps.println(">>> 5. QUIT");
+		ps.println(">>> 4. UPDATE EMPLOYEE DETAILS");
+		ps.println(">>> 5. SET DIRECTOR BENEFIT");
+		ps.println(">>> 6. QUIT");
 		ps.println(">>>");
 	}
 
@@ -206,7 +210,7 @@ public class CorpMain {
 	public Employee registerEmployee() {
 		Employee employee = null;
 		int option = NO_SELECTION;
-		int id = inputInteger(">>> PLEASE ENTER EMPLOYEES IDENTIFICATION NUMBER");
+		int id = inputInteger(">>> ENTER EMPLOYEES IDENTIFICATION NUMBER");
 		if (checkEmployeeExists(id)) {
 			ps.println(">>> THIS EMPLOYEE IS ALREADY REGISTERED, CANCELLING REGISTRATION");
 		} else {
@@ -350,15 +354,25 @@ public class CorpMain {
 		int id = inputInteger(">>> PLEASE ENTER THE ID OF THE EMPLOYEE YOU WANT TO UPDATE");
 		Employee em = retrieveEmployee(id);
 		if (em != null) {
-			if (em.isDirector()) {
-				
-			} else if (em.isManager()) {
-
-			} else if (em.isIntern()) {
-
-			} else if (em.isRegularEmployee()) {
-
-			}
+			printUpdateMenu();
+			int option = NO_SELECTION;
+			do {
+				option = inputInteger(">>> TYPE OPTION CHOICE");
+				switch (option) {
+				case NAME:
+					ps.println(">>> UPDATING EMPLOYEE NAME...");
+					String name = inputString(">>> ENTER NEW NAME");
+					em.setName(name);
+					ps.println(">>> NAME UPDATED");
+					break;
+				case SALARY:
+					ps.println(">>> UPDATING EMPLOYEE SALARY...");
+					double salary = inputDouble(">>> ENTER NEW SALARY");
+					em.setGrossSalary(salary);
+					ps.println(">>> SALARY UPDATED");
+					break;
+				}
+			} while (option == NO_SELECTION);
 		}
 	}
 
@@ -367,8 +381,70 @@ public class CorpMain {
 		ps.println(">>>");
 		ps.println(">>> 1. UPDATE NAME");
 		ps.println(">>> 2. UPDATE GROSS SALARY");
-		
-		
+	}
+
+	// --- Promotions
+
+	public void promote() {
+		int id = inputInteger(">>> ENTER EMPLOYEE ID NUMBER");
+		Employee em = retrieveEmployee(id);
+		if (em != null) {
+			printPromotionMenu();
+			int option = NO_SELECTION;
+			do {
+				option = inputInteger(">>> TYPE OPTION CHOICE");
+				switch (option) {
+				case EMPLOYEE:
+					promoteToRegularEmployee(em);
+					break;
+				case INTERN:
+					int gpa = inputInteger(">>> ENTER GPA (0-10)");
+					promoteToIntern(em, gpa);
+					break;
+				case MANAGER:
+					DegreeType degree = DegreeType.NA;
+					if(em.isDirector()) {
+						//degree = em.getDegree();
+					} else {
+						degree = retrieveDegreeType();
+					}
+					
+					promoteToManager(em, degree);
+					break;
+				case DIRECTOR:
+					
+					break;
+				default:
+					ps.println(">>> ERROR: INVALID OPTION SELECTED");
+					break;
+				}
+			} while (option == NO_SELECTION);
+		}
+	}
+
+	public void printPromotionMenu() {
+		ps.println(">>> SELECT AN OPTION BELOW");
+		ps.println(">>>");
+		ps.println(">>> 1. PROMOTE TO REGULAR EMPLOYEE");
+		ps.println(">>> 2. PROMOTE TO INTERN");
+		ps.println(">>> 3. PROMOTE TO MANAGER");
+		ps.println(">>> 4. PROMOTE TO DIRECTOR");
+	}
+
+	public void promoteToManager(Employee em, DegreeType degree) {
+
+	}
+
+	public void promoteToDirector() {
+
+	}
+
+	public void promoteToIntern(Employee em, int gpa) {
+
+	}
+
+	public void promoteToRegularEmployee(Employee em) {
+
 	}
 
 	public static void main(String[] args) {
