@@ -233,13 +233,12 @@ public class CorpMain {
 		DegreeType degree = DegreeType.NA;
 		do {
 			String dt = io.inputString(">>> ENTER THE DEGREE CLASSIFICATION OF THE EMPLOYEE (BSC/MSC/PHD)");
-			if (dt.equalsIgnoreCase("BSc")) {
-				degree = DegreeType.BSc;
-			} else if (dt.equalsIgnoreCase("MSc")) {
-				degree = DegreeType.MSc;
-			} else if (dt.equalsIgnoreCase("PhD")) {
-				degree = DegreeType.PhD;
-			}
+			try {
+                degree = EnumOperations.searchEnum(DegreeType.class, dt);
+            } catch (Exception e) {
+			    //TODO: replace with specific exception(s)
+			    io.println(">>> ERROR: ILLEGAL DEGREE CLASSIFICATION. TRY AGAIN");
+            }
 		} while (degree == DegreeType.NA);
 		return degree;
 	}
@@ -247,13 +246,12 @@ public class CorpMain {
 	public Department retrieveDepartment() {
 		Department department = Department.NA;
 		do {
-			String dt = io.inputString(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (HR/TECH/BUSI)");
-			if (dt.equalsIgnoreCase("HR")) {
-				department = Department.HR;
-			} else if (dt.equalsIgnoreCase("TECH")) {
-				department = Department.TECHNICAL;
-			} else if (dt.equalsIgnoreCase("BUSI")) {
-				department = Department.BUSINESS;
+			String dep = io.inputString(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (HR/TECH/BUSI)");
+			try {
+				department = EnumOperations.searchEnum(Department.class, dep);
+			} catch (Exception e) {
+				//TODO: replace with specific exception(s)
+				io.println(">>> ERROR: ILLEGAL DEPARTMENT. TRY AGAIN");
 			}
 		} while (department == Department.NA);
 		return department;
