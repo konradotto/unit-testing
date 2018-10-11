@@ -17,12 +17,13 @@ public class Employee {
     private String name;
     private double grossSalary;
     private double netSalary;
-    protected TaxingScheme taxingScheme;
+    private TaxingScheme taxingScheme;
 
     public Employee(String name, double grossSalary, int id) {
         this.id = id;
         this.name = name;
         this.grossSalary = grossSalary;
+        setTaxingScheme(new StandardTax());
     }
 
     public boolean equals(int id) {
@@ -61,14 +62,6 @@ public class Employee {
     
     public boolean isIntern() {
     	if(this instanceof Intern) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
-    
-    public boolean isRegularEmployee() {
-    	if(this instanceof RegularEmployee) {
     		return true;
     	} else {
     		return false;
