@@ -55,25 +55,36 @@ public class CorpMain {
 	// --- Retrieve Employee
 
 	public Employee retrieveEmployee(int id) {
-		for (Employee em : employees) {
-			if (em.equals(id)) {
-				io.printf(">>> EMPLOYEE %d FOUND%n", id);
-				return em;
-			}
-		}
-		io.printf(">>>ERROR: AN EMPLOYEE OF ID %d IS NOT REGISTERED IN THE SYSTEM%n", id);
-		return null;
+	    Employee returnEmp = null;
+        int i = 0;
+	    while (i < employees.size() && returnEmp == null) {
+            Employee tempEmp = employees.get(i);
+            if (tempEmp.getId() == id) {
+                io.printf(">>> EMPLOYEE %d FOUND%n", id);
+                returnEmp = tempEmp;
+            }
+			++i;
+        }
+
+        if (returnEmp == null) {
+	        io.printf(">>>ERROR: AN EMPLOYEE OF ID %d IS NOT REGISTERED IN THE SYSTEM%n", id);
+        }
+
+		return returnEmp;
 	}
 
 	// --- Check Existing
 
 	public boolean checkEmployeeExists(int id) {
-		for (Employee em : employees) {
-			if (em.equals(id)) {
-				return true;
+		boolean exists = false;
+		int i = 0;
+		while (i < employees.size() && exists == false) {
+			if (employees.get(i).getId() == id) {
+				exists = true;
 			}
+			++i;
 		}
-		return false;
+		return exists;
 	}
 
 	// --- Main Menu
