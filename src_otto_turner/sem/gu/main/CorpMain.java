@@ -3,6 +3,8 @@ package sem.gu.main;
 import java.util.ArrayList;
 
 import sem.gu.classes.*;
+import sem.gu.enums.DegreeType;
+import sem.gu.enums.Department;
 
 public class CorpMain {
 
@@ -76,6 +78,8 @@ public class CorpMain {
 	// --- Main Menu
 
 	public void run() {
+        io.printf("%s%n", DegreeType.BSc.name());
+        io.printf("%s%n", DegreeType.valueOf("PHD"));
 		io.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
 		do {

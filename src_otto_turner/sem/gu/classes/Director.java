@@ -1,5 +1,8 @@
 package sem.gu.classes;
 
+import sem.gu.enums.DegreeType;
+import sem.gu.enums.Department;
+
 public class Director extends Manager{
 	
 	private Department department;

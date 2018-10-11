@@ -1,5 +1,7 @@
 package sem.gu.classes;
 
+import sem.gu.enums.DegreeType;
+
 public class Manager extends Employee{
 	
 	private DegreeType degree;
