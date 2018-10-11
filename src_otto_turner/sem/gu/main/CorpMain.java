@@ -79,8 +79,6 @@ public class CorpMain {
 	// --- Main Menu
 
 	public void run() {
-        io.printf("%s%n", DegreeType.BSc.name());
-        io.printf("%s%n", EnumOperations.searchEnum(DegreeType.class, "PHD"));
 		io.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
 		do {
@@ -134,12 +132,12 @@ public class CorpMain {
 		io.println(">>>");
 		io.println(">>> CHOOSE AN OPTION BELOW");
 		io.println(">>>");
-		io.println(">>> 1. REGISTER AN EMPLOYEE");
-		io.println(">>> 2. REMOVE AN EMPLOYEE");
-		io.println(">>> 3. PRINT AN EMPLOYEE'S DETAILS");
-		io.println(">>> 4. UPDATE EMPLOYEE DETAILS");
-		io.println(">>> 5. SET DIRECTOR BENEFIT");
-		io.println(">>> 6. QUIT");
+		io.printf(">>> %d. REGISTER AN EMPLOYEE%n", REGISTER);
+		io.printf(">>> %d. REMOVE AN EMPLOYEE%n", REMOVE);
+		io.printf(">>> %d. PRINT AN EMPLOYEE'S DETAILS%n", RETRIEVE);
+		io.printf(">>> %d. UPDATE EMPLOYEE DETAILS%n", UPDATE_INFO);
+		io.printf(">>> %d. SET DIRECTOR BENEFIT%n", DIR_BENEFIT);
+		io.printf(">>> %d. QUIT%n", QUIT);
 		io.println(">>>");
 	}
 
@@ -161,22 +159,22 @@ public class CorpMain {
 				case EMPLOYEE:
 					io.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
 					employee = new RegularEmployee(name, grossSalary, id);
-					io.println(">>> EMPLOYEE CREATION SUCCESSFULL");
+					io.println(">>> EMPLOYEE CREATION SUCCESSFUL");
 					break;
 				case INTERN:
 					io.println(">>> ATTEMPTING TO CREATE INTERN...");
 					employee = createIntern(name, grossSalary, id);
-					io.println(">>> INTERN CREATION SUCCESSFULL");
+					io.println(">>> INTERN CREATION SUCCESSFUL");
 					break;
 				case MANAGER:
 					io.println(">>> ATTEMPTING TO CREATE MANAGER...");
 					employee = createManager(name, grossSalary, id);
-					io.println(">>> MANAGER CREATION SUCCESSFULL");
+					io.println(">>> MANAGER CREATION SUCCESSFUL");
 					break;
 				case DIRECTOR:
 					io.println(">>> ATTEMPTING TO CREATE DIRECTOR...");
 					employee = createDirector(name, grossSalary, id);
-					io.println(">>> DIRECTOR CREATION SUCCESSFULL");
+					io.println(">>> DIRECTOR CREATION SUCCESSFUL");
 					break;
 				default:
 					io.println(">>> ERROR: INVALID OPTION SELECTED");
