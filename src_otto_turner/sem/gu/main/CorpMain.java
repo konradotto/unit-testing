@@ -1,30 +1,19 @@
 package sem.gu.main;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
-import sem.gu.classes.DegreeType;
-import sem.gu.classes.Department;
-import sem.gu.classes.Director;
-import sem.gu.classes.Employee;
-import sem.gu.classes.Intern;
-import sem.gu.classes.Manager;
-import sem.gu.classes.RegularEmployee;
-import sem.gu.exceptions.NegativeInputException;
+import sem.gu.classes.*;
 
 public class CorpMain {
 
 	// GLOBAL VARIABLES
-	private PrintStream ps;
-	private Scanner scan;
+	private IOManager io;
 	private ArrayList<Employee> employees;
 	private int numEmployees;
 	private int dirBenefit;
 
 	// CONSTANTS
-	private final int NO_SELECTION = -1;
+    private final int NO_SELECTION = -1;
 	private final int DEFAULT_DIRECTOR_BENEFIT = 5000;
 
 	// MAIN MENU CONSTANTS
@@ -46,74 +35,18 @@ public class CorpMain {
 	private final int SALARY = 2;
 
 	public CorpMain() {
-		this.ps = new PrintStream(System.out);
-		this.scan = new Scanner(System.in);
+		io = new IOManager(System.in, System.out);
 		this.dirBenefit = DEFAULT_DIRECTOR_BENEFIT;
 		this.numEmployees = 0;
 		this.employees = new ArrayList<Employee>();
 
 	}
 
-	// --- Input Primitives
-
-	public double inputDouble(String message) {
-		double inputDouble = NO_SELECTION; // Set default values
-		while (inputDouble == NO_SELECTION) {
-			ps.println(message);
-			try {
-				inputDouble = scan.nextDouble(); // attempt to take in a double
-				if (inputDouble < 0) {
-					// entered value cannot be negative
-					throw new NegativeInputException();
-				}
-			} catch (InputMismatchException ex) {
-				inputDouble = -1.0;
-				ps.printf("InputMismatchException caught. Your input could not be parsed into a double.%n");
-			} catch (NegativeInputException ex) {
-				inputDouble = -1.0;
-				ps.printf("%s%n", ex.getMessage());
-			} finally {
-				scan.nextLine();
-			}
-		}
-		return inputDouble;
-	}
-
-	public int inputInteger(String message) {
-		int inputInt = NO_SELECTION; // Set default values
-		while (inputInt == NO_SELECTION) {
-			ps.println(message);
-			try {
-				inputInt = scan.nextInt(); // attempt to take in a double
-				if (inputInt < 0) {
-					// entered value cannot be negative
-					throw new NegativeInputException();
-				}
-			} catch (InputMismatchException ex) {
-				inputInt = NO_SELECTION;
-				ps.printf("InputMismatchException caught. Your input could not be parsed into an integer%n");
-			} catch (NegativeInputException ex) {
-				inputInt = NO_SELECTION;
-				ps.printf("%s%n", ex.getMessage());
-			} finally {
-				scan.nextLine();
-			}
-		}
-		return inputInt;
-	}
-
-	public String inputString(String message) {
-		String inputString = ""; // Set default value
-		while (inputString.equals("")) {
-			ps.println(message);
-			inputString = scan.nextLine();
-			if (inputString.equals("") || inputString.equals(" ")) {
-				// if entered string is empty of just a space, loop again
-				inputString = "";
-				ps.println("Entered value is invalid, value must have at least 1 character that is not a space");
-			}
-		}
-		return inputString;
+	/**
+	 *  Function to clean-up (close the scanner) at the end of runtime
+	 */
+	private void close() {
+		io.close();
 	}
 
 	// --- Retrieve Employee
@@ -121,11 +54,11 @@ public class CorpMain {
 	public Employee retrieveEmployee(int id) {
 		for (Employee em : employees) {
 			if (em.equals(id)) {
-				ps.printf(">>> EMPLOYEE %d FOUND%n", id);
+				io.printf(">>> EMPLOYEE %d FOUND%n", id);
 				return em;
 			}
 		}
-		ps.printf(">>>ERROR: AN EMPLOYEE OF ID %d IS NOT REGISTERED IN THE SYSTEM%n", id);
+		io.printf(">>>ERROR: AN EMPLOYEE OF ID %d IS NOT REGISTERED IN THE SYSTEM%n", id);
 		return null;
 	}
 
@@ -143,66 +76,66 @@ public class CorpMain {
 	// --- Main Menu
 
 	public void run() {
-		ps.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
+		io.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
 		do {
 			printMenu();
-			option = inputInteger(">>> TYPE OPTION NUMBER");
+			option = io.inputInteger(">>> TYPE OPTION NUMBER");
 			switch (option) {
 			case REGISTER:
-				ps.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n", REGISTER);
-				ps.println(">>>");
+				io.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n", REGISTER);
+				io.println(">>>");
 				Employee employee = registerEmployee();
 				numEmployees += 1;
 				employees.add(employee);
-				ps.printf(">>> EMPLOYEE REGISTERED. THERE IS NOW %d EMPLOYEE(S) REGISTERED%n", numEmployees);
+				io.printf(">>> EMPLOYEE REGISTERED. THERE IS NOW %d EMPLOYEE(S) REGISTERED%n", numEmployees);
 				break;
 			case REMOVE:
-				ps.printf(">>> OPTION %d SELECTED: REMOVING AN EMPLOYEE%n", REMOVE);
-				ps.println(">>>");
+				io.printf(">>> OPTION %d SELECTED: REMOVING AN EMPLOYEE%n", REMOVE);
+				io.println(">>>");
 				removeEmployee();
 				break;
 			case RETRIEVE:
-				ps.printf(">>> OPTION %d SELECTED: PRINTING EMPLOYEE DETAILS%n", RETRIEVE);
-				ps.println(">>>");
-				int id = inputInteger(">>> ENTER THE ID OF THE EMPLOYEE");
+				io.printf(">>> OPTION %d SELECTED: PRINTING EMPLOYEE DETAILS%n", RETRIEVE);
+				io.println(">>>");
+				int id = io.inputInteger(">>> ENTER THE ID OF THE EMPLOYEE");
 				Employee em = retrieveEmployee(id);
 				if (em != null) {
-					ps.println(em.toString());
+					io.println(em.toString());
 				}
 				break;
 			case UPDATE_INFO:
-				ps.printf(">>> OPTION %d SELECTED: UPDATE EMPLOYEE INFO", UPDATE_INFO);
-				ps.println(">>>");
+				io.printf(">>> OPTION %d SELECTED: UPDATE EMPLOYEE INFO", UPDATE_INFO);
+				io.println(">>>");
 				updateInfo();
 				break;
 			case DIR_BENEFIT:
-				ps.printf(">>> OPTION %d SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
-				ps.println(">>>");
+				io.printf(">>> OPTION %d SELECTED: SET DIRECTOR BENEFITS%n", DIR_BENEFIT);
+				io.println(">>>");
 				setDirectorBenefits();
 				break;
 			case QUIT:
-				ps.printf(">>> OPTION %d SELECTED: EXITING SYSTEM%n", QUIT);
-				ps.println(">>> HAVE A NICE DAY...");
+				io.printf(">>> OPTION %d SELECTED: EXITING SYSTEM%n", QUIT);
+				io.println(">>> HAVE A NICE DAY...");
 				break;
 			default:
-				ps.println(">>> ERROR: INVALID OPTION SELECTED");
+				io.println(">>> ERROR: INVALID OPTION SELECTED");
 				break;
 			}
 		} while (option != QUIT);
 	}
 
 	public void printMenu() {
-		ps.println(">>>");
-		ps.println(">>> CHOOSE AN OPTION BELOW");
-		ps.println(">>>");
-		ps.println(">>> 1. REGISTER AN EMPLOYEE");
-		ps.println(">>> 2. REMOVE AN EMPLOYEE");
-		ps.println(">>> 3. PRINT AN EMPLOYEE'S DETAILS");
-		ps.println(">>> 4. UPDATE EMPLOYEE DETAILS");
-		ps.println(">>> 5. SET DIRECTOR BENEFIT");
-		ps.println(">>> 6. QUIT");
-		ps.println(">>>");
+		io.println(">>>");
+		io.println(">>> CHOOSE AN OPTION BELOW");
+		io.println(">>>");
+		io.println(">>> 1. REGISTER AN EMPLOYEE");
+		io.println(">>> 2. REMOVE AN EMPLOYEE");
+		io.println(">>> 3. PRINT AN EMPLOYEE'S DETAILS");
+		io.println(">>> 4. UPDATE EMPLOYEE DETAILS");
+		io.println(">>> 5. SET DIRECTOR BENEFIT");
+		io.println(">>> 6. QUIT");
+		io.println(">>>");
 	}
 
 	// --- Create Employee
@@ -210,38 +143,38 @@ public class CorpMain {
 	public Employee registerEmployee() {
 		Employee employee = null;
 		int option = NO_SELECTION;
-		int id = inputInteger(">>> ENTER EMPLOYEES IDENTIFICATION NUMBER");
+		int id = io.inputInteger(">>> ENTER EMPLOYEES IDENTIFICATION NUMBER");
 		if (checkEmployeeExists(id)) {
-			ps.println(">>> THIS EMPLOYEE IS ALREADY REGISTERED, CANCELLING REGISTRATION");
+			io.println(">>> THIS EMPLOYEE IS ALREADY REGISTERED, CANCELLING REGISTRATION");
 		} else {
 			do {
-				String name = inputString(">>> PLEASE ENTER EMPLOYEES NAME");
-				double grossSalary = inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
+				String name = io.inputString(">>> PLEASE ENTER EMPLOYEES NAME");
+				double grossSalary = io.inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
 				printEmployeeRegisterMenu();
-				option = inputInteger(">>> TYPE OPTION CHOICE");
+				option = io.inputInteger(">>> TYPE OPTION CHOICE");
 				switch (option) {
 				case EMPLOYEE:
-					ps.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
+					io.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
 					employee = new RegularEmployee(name, grossSalary, id);
-					ps.println(">>> EMPLOYEE CREATION SUCCESSFULL");
+					io.println(">>> EMPLOYEE CREATION SUCCESSFULL");
 					break;
 				case INTERN:
-					ps.println(">>> ATTEMPTING TO CREATE INTERN...");
+					io.println(">>> ATTEMPTING TO CREATE INTERN...");
 					employee = createIntern(name, grossSalary, id);
-					ps.println(">>> INTERN CREATION SUCCESSFULL");
+					io.println(">>> INTERN CREATION SUCCESSFULL");
 					break;
 				case MANAGER:
-					ps.println(">>> ATTEMPTING TO CREATE MANAGER...");
+					io.println(">>> ATTEMPTING TO CREATE MANAGER...");
 					employee = createManager(name, grossSalary, id);
-					ps.println(">>> MANAGER CREATION SUCCESSFULL");
+					io.println(">>> MANAGER CREATION SUCCESSFULL");
 					break;
 				case DIRECTOR:
-					ps.println(">>> ATTEMPTING TO CREATE DIRECTOR...");
+					io.println(">>> ATTEMPTING TO CREATE DIRECTOR...");
 					employee = createDirector(name, grossSalary, id);
-					ps.println(">>> DIRECTOR CREATION SUCCESSFULL");
+					io.println(">>> DIRECTOR CREATION SUCCESSFULL");
 					break;
 				default:
-					ps.println(">>> ERROR: INVALID OPTION SELECTED");
+					io.println(">>> ERROR: INVALID OPTION SELECTED");
 					option = NO_SELECTION;
 					break;
 				}
@@ -251,17 +184,17 @@ public class CorpMain {
 	}
 
 	public void printEmployeeRegisterMenu() {
-		ps.println(">>> CHOOSE WHAT TYPE OF EMPLOYEE YOU WISH TO ADD");
-		ps.println(">>> 1. REGULAR EMPLOYEE");
-		ps.println(">>> 2. INTERN");
-		ps.println(">>> 3. MANAGER");
-		ps.println(">>> 4. DIRECTOR");
+		io.println(">>> CHOOSE WHAT TYPE OF EMPLOYEE YOU WISH TO ADD");
+		io.println(">>> 1. REGULAR EMPLOYEE");
+		io.println(">>> 2. INTERN");
+		io.println(">>> 3. MANAGER");
+		io.println(">>> 4. DIRECTOR");
 	}
 
 	public Intern createIntern(String name, double grossSalary, int id) {
 		int gpa = NO_SELECTION;
 		do {
-			gpa = inputInteger(">>> PLEASE ENTER THE GPA (0-10) OF THE INTERN");
+			gpa = io.inputInteger(">>> PLEASE ENTER THE GPA (0-10) OF THE INTERN");
 			if (gpa < 0 || gpa > 10)
 				gpa = NO_SELECTION;
 		} while (gpa == NO_SELECTION);
@@ -285,7 +218,7 @@ public class CorpMain {
 	public DegreeType retrieveDegreeType() {
 		DegreeType degree = DegreeType.NA;
 		do {
-			String dt = inputString(">>> ENTER THE DEGREE CLASSIFICATION OF THE EMPLOYEE (BSC/MSC/PHD)");
+			String dt = io.inputString(">>> ENTER THE DEGREE CLASSIFICATION OF THE EMPLOYEE (BSC/MSC/PHD)");
 			if (dt.equalsIgnoreCase("BSc")) {
 				degree = DegreeType.BSc;
 			} else if (dt.equalsIgnoreCase("MSc")) {
@@ -300,7 +233,7 @@ public class CorpMain {
 	public Department retrieveDepartment() {
 		Department department = Department.NA;
 		do {
-			String dt = inputString(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (HR/TECH/BUSI)");
+			String dt = io.inputString(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (HR/TECH/BUSI)");
 			if (dt.equalsIgnoreCase("HR")) {
 				department = Department.HR;
 			} else if (dt.equalsIgnoreCase("TECH")) {
@@ -315,35 +248,35 @@ public class CorpMain {
 	// --- Remove Employee
 
 	public void removeEmployee() {
-		int id = inputInteger(">>> ENTER THE ID OF THE EMPLOYEE TO DELETE");
+		int id = io.inputInteger(">>> ENTER THE ID OF THE EMPLOYEE TO DELETE");
 		int index = NO_SELECTION;
 
 		for (int i = 0; i < employees.size(); i++) {
 			if (employees.get(i).equals(id))
 				;
-			ps.println(">>> EMPLOYEE FOUND. PREPARING DELETION");
+			io.println(">>> EMPLOYEE FOUND. PREPARING DELETION");
 			index = i;
 		}
 
 		if (index == NO_SELECTION) {
-			ps.println(">>> ERROR: EMPLOYEE NOT FOUND. DELETION CANCELLED");
+			io.println(">>> ERROR: EMPLOYEE NOT FOUND. DELETION CANCELLED");
 		} else {
 			employees.remove(index);
 			numEmployees--;
 			// TODO clean up arraylist
-			ps.println(">>> EMPLOYEE DELETED");
+			io.println(">>> EMPLOYEE DELETED");
 		}
 	}
 
 	// --- Set Director Benefits
 
 	public void setDirectorBenefits() {
-		double benefit = inputDouble(">>> ENTER NEW BENEFIT AMOUNT");
+		double benefit = io.inputDouble(">>> ENTER NEW BENEFIT AMOUNT");
 		for (int i = 0; i < employees.size(); i++) {
 			if (employees.get(i).isDirector()) {
 				Director dir = (Director) employees.get(i);
 				dir.setBenefit(benefit);
-				ps.printf(">>> DIRECTOR %d NEW BENEFIT SET%n", dir.getId());
+				io.printf(">>> DIRECTOR %d NEW BENEFIT SET%n", dir.getId());
 			}
 		}
 	}
@@ -351,25 +284,25 @@ public class CorpMain {
 	// --- Update Employee Information
 
 	public void updateInfo() {
-		int id = inputInteger(">>> PLEASE ENTER THE ID OF THE EMPLOYEE YOU WANT TO UPDATE");
+		int id = io.inputInteger(">>> PLEASE ENTER THE ID OF THE EMPLOYEE YOU WANT TO UPDATE");
 		Employee em = retrieveEmployee(id);
 		if (em != null) {
 			printUpdateMenu();
 			int option = NO_SELECTION;
 			do {
-				option = inputInteger(">>> TYPE OPTION CHOICE");
+				option = io.inputInteger(">>> TYPE OPTION CHOICE");
 				switch (option) {
 				case NAME:
-					ps.println(">>> UPDATING EMPLOYEE NAME...");
-					String name = inputString(">>> ENTER NEW NAME");
+					io.println(">>> UPDATING EMPLOYEE NAME...");
+					String name = io.inputString(">>> ENTER NEW NAME");
 					em.setName(name);
-					ps.println(">>> NAME UPDATED");
+					io.println(">>> NAME UPDATED");
 					break;
 				case SALARY:
-					ps.println(">>> UPDATING EMPLOYEE SALARY...");
-					double salary = inputDouble(">>> ENTER NEW SALARY");
+					io.println(">>> UPDATING EMPLOYEE SALARY...");
+					double salary = io.inputDouble(">>> ENTER NEW SALARY");
 					em.setGrossSalary(salary);
-					ps.println(">>> SALARY UPDATED");
+					io.println(">>> SALARY UPDATED");
 					break;
 				}
 			} while (option == NO_SELECTION);
@@ -377,28 +310,28 @@ public class CorpMain {
 	}
 
 	public void printUpdateMenu() {
-		ps.println(">>> PLEASE SELECT AN OPTION BELOW");
-		ps.println(">>>");
-		ps.println(">>> 1. UPDATE NAME");
-		ps.println(">>> 2. UPDATE GROSS SALARY");
+		io.println(">>> PLEASE SELECT AN OPTION BELOW");
+		io.println(">>>");
+		io.println(">>> 1. UPDATE NAME");
+		io.println(">>> 2. UPDATE GROSS SALARY");
 	}
 
 	// --- Promotions
 
 	public void promote() {
-		int id = inputInteger(">>> ENTER EMPLOYEE ID NUMBER");
+		int id = io.inputInteger(">>> ENTER EMPLOYEE ID NUMBER");
 		Employee em = retrieveEmployee(id);
 		if (em != null) {
 			printPromotionMenu();
 			int option = NO_SELECTION;
 			do {
-				option = inputInteger(">>> TYPE OPTION CHOICE");
+				option = io.inputInteger(">>> TYPE OPTION CHOICE");
 				switch (option) {
 				case EMPLOYEE:
 					promoteToRegularEmployee(em);
 					break;
 				case INTERN:
-					int gpa = inputInteger(">>> ENTER GPA (0-10)");
+					int gpa = io.inputInteger(">>> ENTER GPA (0-10)");
 					promoteToIntern(em, gpa);
 					break;
 				case MANAGER:
@@ -415,7 +348,7 @@ public class CorpMain {
 					
 					break;
 				default:
-					ps.println(">>> ERROR: INVALID OPTION SELECTED");
+					io.println(">>> ERROR: INVALID OPTION SELECTED");
 					break;
 				}
 			} while (option == NO_SELECTION);
@@ -423,12 +356,12 @@ public class CorpMain {
 	}
 
 	public void printPromotionMenu() {
-		ps.println(">>> SELECT AN OPTION BELOW");
-		ps.println(">>>");
-		ps.println(">>> 1. PROMOTE TO REGULAR EMPLOYEE");
-		ps.println(">>> 2. PROMOTE TO INTERN");
-		ps.println(">>> 3. PROMOTE TO MANAGER");
-		ps.println(">>> 4. PROMOTE TO DIRECTOR");
+		io.println(">>> SELECT AN OPTION BELOW");
+		io.println(">>>");
+		io.println(">>> 1. PROMOTE TO REGULAR EMPLOYEE");
+		io.println(">>> 2. PROMOTE TO INTERN");
+		io.println(">>> 3. PROMOTE TO MANAGER");
+		io.println(">>> 4. PROMOTE TO DIRECTOR");
 	}
 
 	public void promoteToManager(Employee em, DegreeType degree) {
