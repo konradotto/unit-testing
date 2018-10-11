@@ -7,6 +7,7 @@ import java.util.UUID;
  * Abstract Employee class provides the structure for all types of Employee within assignment 3 of DIT042.
  *
  * @author Konrad Otto
+ * @author Jack Turner
  * @version 1.0
  * @since 2018-10-06
  */
@@ -110,7 +111,7 @@ public class Employee {
     }
 
     public void setTaxingScheme(TaxingScheme taxingScheme) {
-        setNetSalary(grossSalary);
+        setNetSalary(taxingScheme.calculateNetSalary(grossSalary));
         this.taxingScheme = taxingScheme;
     }
 }

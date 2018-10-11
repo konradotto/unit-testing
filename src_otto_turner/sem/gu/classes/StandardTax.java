@@ -1,6 +1,6 @@
 package sem.gu.classes;
 
-public static class StandardTax implements TaxingScheme {
+public class StandardTax implements TaxingScheme {
 
     private static final double STANDARD_TAX_RATE = 0.1;
 

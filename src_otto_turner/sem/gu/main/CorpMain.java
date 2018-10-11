@@ -247,12 +247,12 @@ public class CorpMain {
 		Department department = Department.NA;
 		do {
 			String dep = io.inputString(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (HR/TECH/BUSI)");
-			try {
-				department = EnumOperations.searchEnum(Department.class, dep);
-			} catch (Exception e) {
-				//TODO: replace with specific exception(s)
-				io.println(">>> ERROR: ILLEGAL DEPARTMENT. TRY AGAIN");
-			}
+
+			department = EnumOperations.searchEnum(Department.class, dep);
+
+			if (department == null) {
+                io.println(">>> ERROR: ILLEGAL DEPARTMENT. TRY AGAIN");
+            }
 		} while (department == Department.NA);
 		return department;
 	}
