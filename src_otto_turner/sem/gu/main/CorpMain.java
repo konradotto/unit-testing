@@ -169,7 +169,7 @@ public class CorpMain {
 				switch (option) {
 				case EMPLOYEE:
 					io.println(">>> ATTEMPTING TO CREATE EMPLOYEE...");
-					employee = new RegularEmployee(name, grossSalary, id);
+					employee = new Employee(name, grossSalary, id);
 					io.println(">>> EMPLOYEE CREATION SUCCESSFUL");
 					break;
 				case INTERN:
