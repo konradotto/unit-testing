@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import sem.gu.classes.*;
 import sem.gu.enums.DegreeType;
 import sem.gu.enums.Department;
+import sem.gu.enums.EnumOperations;
 
 public class CorpMain {
 
@@ -79,7 +80,7 @@ public class CorpMain {
 
 	public void run() {
         io.printf("%s%n", DegreeType.BSc.name());
-        io.printf("%s%n", DegreeType.valueOf("PHD"));
+        io.printf("%s%n", EnumOperations.searchEnum(DegreeType.class, "PHD"));
 		io.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
 		do {
