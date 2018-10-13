@@ -342,8 +342,10 @@ public class CorpMain {
                     case GRADE:
                         if (em.isIntern()) {
                             io.println(">>> UPDATING INTERN GPA...");
-                            Intern temp_em = (Intern) em;
-                            temp_em.setGpa(readGPA());
+                            //TODO: if you have a better solution for the next 3 lines... (probably needs massive refactoring of the interface)
+                            GPA gpa = readGPA();
+                            ((Intern) em).setGpa(gpa);
+                            ((InternSalary) em.getSalaryScheme()).setGpa(gpa);
                             io.println(">>> GPA UPDATED");
                             break;
                         }
