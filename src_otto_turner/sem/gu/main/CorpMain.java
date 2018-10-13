@@ -99,8 +99,10 @@ public class CorpMain {
                     io.printf(">>> OPTION %d SELECTED: REGISTERING AN EMPLOYEE%n", REGISTER);
                     io.println(">>>");
                     Employee employee = registerEmployee();
-                    employees.add(employee);
-                    io.printf(">>> EMPLOYEE REGISTERED. THERE IS NOW %d EMPLOYEE(S) REGISTERED%n", employees.size());
+                    if (employee != null) {
+                        employees.add(employee);
+                        io.printf(">>> EMPLOYEE REGISTERED. THERE IS NOW %d EMPLOYEE(S) REGISTERED%n", employees.size());
+                    }
                     break;
                 case REMOVE:
                     io.printf(">>> OPTION %d SELECTED: REMOVING AN EMPLOYEE%n", REMOVE);
@@ -128,6 +130,7 @@ public class CorpMain {
                     break;
                 case PROMOTE:
                     promote();
+                    break;
                 case QUIT:
                     io.printf(">>> OPTION %d SELECTED: EXITING SYSTEM%n", QUIT);
                     io.println(">>> HAVE A NICE DAY...");
@@ -168,9 +171,15 @@ public class CorpMain {
 
             do {
                 name = io.inputString(">>> PLEASE ENTER EMPLOYEES NAME");
+                if (name.equals("")) {
+                    io.println(">>> ERROR: INVALID NAME SELECTED. NEEDS TO BE A DIFFERENT FROM THE EMPTY STRING. TRY AGAIN");
+                }
             } while (name.equals(""));
             do {
-                basicGrossSalary = io.inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
+                basicGrossSalary = io.inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY. TRY AGAIN");
+                if (basicGrossSalary == io.NO_SELECTION) {
+                    io.println(">>> ERROR: INVALID GROSS SALARY SELECTED. NEEDS TO BE A POSITIVE DOUBLE");
+                }
             } while (basicGrossSalary == io.NO_SELECTION);
             do {
                 printEmployeeRegisterMenu();
@@ -264,7 +273,7 @@ public class CorpMain {
     public Department retrieveDepartment() {
         Department department;
         do {
-            String dep = io.inputString(String.format(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (%s/%s/%s)%n", departments[0], departments[1], departments[2]));
+            String dep = io.inputString(String.format(">>> ENTER THE DEPARTMENT OF THE EMPLOYEE (%s/%s/%s)", departments[0], departments[1], departments[2]));
 
             department = EnumOperations.searchEnum(Department.class, dep);
 
@@ -452,5 +461,4 @@ public class CorpMain {
         CorpMain program = new CorpMain();
         program.run();
     }
-
 }

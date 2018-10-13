@@ -45,7 +45,11 @@ public class Employee {
 
     @Override
     public String toString() {
-        return String.format("%d's gross salary is of %.2f SEK per month.",this.id,this.basicGrossSalary);
+        return String.format("%d's gross salary is of %.2f SEK per month.%n%d's net salary is of %.2f SEK per month",
+                this.id,
+                this.salaryScheme.calculateGrossTotal(basicGrossSalary),
+                this.id,
+                this.salaryScheme.calculateNetSalary(basicGrossSalary));
     }
 
     public boolean isRegularEmployee() {
