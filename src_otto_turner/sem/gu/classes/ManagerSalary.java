@@ -31,7 +31,9 @@ public class ManagerSalary implements SalaryScheme {
 
     @Override
     public double calculateNetSalary(double grossSalary) {
-        return 0;
+        double grossTotal = calculateGrossTotal(grossSalary);
+
+        return grossTotal - (StandardSalary.STANDARD_TAX_RATE * grossTotal);
     }
 
     public DegreeType getDegreeType() {
