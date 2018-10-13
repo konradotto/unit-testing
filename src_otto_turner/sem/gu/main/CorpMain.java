@@ -137,6 +137,7 @@ public class CorpMain {
 				break;
 			}
 		} while (option != QUIT);
+		close();
 	}
 
 	public void printMenu() {
