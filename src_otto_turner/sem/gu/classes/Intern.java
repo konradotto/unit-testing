@@ -2,18 +2,19 @@ package sem.gu.classes;
 
 public class Intern extends Employee{
 	
-	private int gpa;
+	private GPA gpa;
 	
-	public Intern(String name, double grossSalary, int id, int gpa) {
+	public Intern(String name, double grossSalary, int id, GPA gpa) {
 		super(name,grossSalary,id);
 		this.gpa = gpa;
+		setSalaryScheme(new InternSalary(gpa));
 	}
 
-	public int getGpa() {
+	public GPA getGpa() {
 		return gpa;
 	}
 
-	public void setGpa(int gpa) {
+	public void setGpa(GPA gpa) {
 		this.gpa = gpa;
 	}
 	

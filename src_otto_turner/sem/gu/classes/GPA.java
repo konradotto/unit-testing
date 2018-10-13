@@ -24,4 +24,12 @@ public class GPA {
     public void setGpa(int gpa) {
         this.gpa = gpa;
     }
+
+    public static int getMaxGpa() {
+        return MAX_GPA;
+    }
+
+    public static int getMinGpa() {
+        return MIN_GPA;
+    }
 }

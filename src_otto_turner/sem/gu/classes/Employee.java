@@ -47,29 +47,21 @@ public class Employee {
     public String toString() {
         return String.format("%d's gross salary is of %.2f SEK per month.",this.id,this.basicGrossSalary);
     }
+
+    public boolean isRegularEmployee() {
+        return this instanceof Employee;
+    }
     
     public boolean isDirector() {
-    	if(this instanceof Director) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return (this instanceof Director);
     }
     
     public boolean isManager() {
-    	if(this instanceof Manager) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        return (this instanceof Manager);
     }
     
     public boolean isIntern() {
-    	if(this instanceof Intern) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        return (this instanceof Intern);
     }
 
     public int getId() {

@@ -17,7 +17,7 @@ public class DirectorSalary extends ManagerSalary {
 
     @Override
     public double calculateGrossTotal(double basicGrossSalary) {
-        double bonus = super.calculateBonus(basicGrossSalary);
+        double bonus = super.determineBonus(basicGrossSalary);
         return basicGrossSalary * (1.0 + bonus) + Director.getBenefit();
     }
 

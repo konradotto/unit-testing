@@ -11,6 +11,7 @@ public class Director extends Manager {
     public Director(String name, double grossSalary, int id, DegreeType degree, Department department) {
         super(name, grossSalary, id, degree);
         this.department = department;
+        setSalaryScheme(new DirectorSalary(this.getDegree()));
     }
 
     public Department getDepartment() {

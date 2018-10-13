@@ -10,7 +10,7 @@ public class ManagerSalary implements SalaryScheme {
         degreeType = degree;
     }
 
-    protected double calculateBonus(double subtotal) {
+    protected double determineBonus(double subtotal) {
         double bonus;
         switch (degreeType) {
             case BSc:
@@ -30,7 +30,7 @@ public class ManagerSalary implements SalaryScheme {
 
     @Override
     public double calculateGrossTotal(double basicGrossSalary) {
-        return basicGrossSalary * (1.0 + calculateBonus(basicGrossSalary));
+        return basicGrossSalary * (1.0 + determineBonus(basicGrossSalary));
     }
 
     @Override

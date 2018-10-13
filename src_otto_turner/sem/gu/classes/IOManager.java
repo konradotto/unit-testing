@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class IOManager extends PrintStream {
 
-    private final int NO_SELECTION = -1;
+    public final int NO_SELECTION = -1;
 
     private final Scanner scanner;
 
@@ -28,7 +28,7 @@ public class IOManager extends PrintStream {
 
     // --- Input Primitives
 
-    public int inputInteger(String message) {
+    public int inputPositiveInteger(String message) {
         int inputInt = NO_SELECTION; // Set default values
         while (inputInt == NO_SELECTION) {
             println(message);
