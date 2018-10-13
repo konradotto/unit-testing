@@ -3,31 +3,30 @@ package sem.gu.classes;
 import sem.gu.enums.DegreeType;
 import sem.gu.enums.Department;
 
-public class Director extends Manager{
-	
-	private Department department;
-	private double benefit;
-	
-	public Director(String name, double grossSalary, int id, DegreeType degree, Department department, double benefit) {
-		super(name, grossSalary, id, degree);
-		this.department = department;
-		this.benefit = benefit;
-	}
+public class Director extends Manager {
 
-	public Department getDepartment() {
-		return department;
-	}
+    private Department department;
+    private static double benefit = 0.0;
 
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
+    public Director(String name, double grossSalary, int id, DegreeType degree, Department department) {
+        super(name, grossSalary, id, degree);
+        this.department = department;
+    }
 
-	public double getBenefit() {
-		return benefit;
-	}
+    public Department getDepartment() {
+        return department;
+    }
 
-	public void setBenefit(double benefit) {
-		this.benefit = benefit;
-	}
-	
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public static double getBenefit() {
+        return benefit;
+    }
+
+    public static void setBenefit(double globalBenefit) {
+        benefit = globalBenefit;
+    }
+
 }

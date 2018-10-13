@@ -314,7 +314,7 @@ public class CorpMain {
 				case SALARY:
 					io.println(">>> UPDATING EMPLOYEE SALARY...");
 					double salary = io.inputDouble(">>> ENTER NEW SALARY");
-					em.setGrossSalary(salary);
+					em.setBasicGrossSalary(salary);
 					io.println(">>> SALARY UPDATED");
 					break;
 				}
