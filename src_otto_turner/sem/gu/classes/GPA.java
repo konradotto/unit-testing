@@ -16,4 +16,12 @@ public class GPA {
         }
         this.gpa = gpa;
     }
+
+    public int getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(int gpa) {
+        this.gpa = gpa;
+    }
 }
