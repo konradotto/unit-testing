@@ -36,6 +36,7 @@ public class CorpMain {
     // UPDATE EMPLOYEE MENU CONSTANTS
     private final int NAME = 1;
     private final int SALARY = 2;
+    private final int GRADE = 3;
 
     public CorpMain() {
         io = new IOManager(System.in, System.out);
@@ -176,9 +177,9 @@ public class CorpMain {
                 }
             } while (name.equals(""));
             do {
-                basicGrossSalary = io.inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY. TRY AGAIN");
+                basicGrossSalary = io.inputDouble(">>> PLEASE ENTER EMPLOYEES GROSS SALARY");
                 if (basicGrossSalary == io.NO_SELECTION) {
-                    io.println(">>> ERROR: INVALID GROSS SALARY SELECTED. NEEDS TO BE A POSITIVE DOUBLE");
+                    io.println(">>> ERROR: INVALID GROSS SALARY SELECTED. NEEDS TO BE A POSITIVE DOUBLE. TRY AGAIN");
                 }
             } while (basicGrossSalary == io.NO_SELECTION);
             do {
@@ -235,7 +236,7 @@ public class CorpMain {
         GPA gpa = null;
         while (gpa == null) {
             try {
-                gpa = new GPA(io.inputPositiveInteger(String.format(">>> PLEASE ENTER THE GPA (%d-%d) OF THE INTERN%n", GPA.getMinGpa(), GPA.getMaxGpa())));
+                gpa = new GPA(io.inputPositiveInteger(String.format(">>> PLEASE ENTER THE GPA (%d-%d) OF THE INTERN", GPA.getMinGpa(), GPA.getMaxGpa())));
             } catch (IllegalGPAException e) {
                 e.printStackTrace(io);
             }
@@ -320,7 +321,8 @@ public class CorpMain {
         int id = io.inputPositiveInteger(">>> PLEASE ENTER THE ID OF THE EMPLOYEE YOU WANT TO UPDATE");
         Employee em = retrieveEmployee(id);
         if (em != null) {
-            printUpdateMenu();
+            printUpdateMenu(em.isIntern());
+            io.println(em.isRegularEmployee());
             int option;
             do {
                 option = io.inputPositiveInteger(">>> TYPE OPTION CHOICE");
@@ -337,16 +339,32 @@ public class CorpMain {
                         em.setBasicGrossSalary(salary);
                         io.println(">>> SALARY UPDATED");
                         break;
+                    case GRADE:
+                        if (em.isIntern()) {
+                            io.println(">>> UPDATING INTERN GPA...");
+                            Intern temp_em = (Intern) em;
+                            temp_em.setGpa(readGPA());
+                            io.println(">>> GPA UPDATED");
+                            break;
+                        }
+
+                        // allow slip to default if not an intern
+                    default:
+                        io.println("ERROR: INVALID OPTION SELECTED. TRY AGAIN");
+                        option = io.NO_SELECTION;
                 }
             } while (option == io.NO_SELECTION);
         }
     }
 
-    public void printUpdateMenu() {
+    public void printUpdateMenu(boolean isIntern) {
         io.println(">>> PLEASE SELECT AN OPTION BELOW");
         io.println(">>>");
-        io.println(">>> 1. UPDATE NAME");
-        io.println(">>> 2. UPDATE GROSS SALARY");
+        io.printf(">>> %d. UPDATE NAME%n", NAME);
+        io.printf(">>> %d. UPDATE GROSS SALARY%n", SALARY);
+        if (isIntern) {
+            io.printf(">>> %d. UPDATE GPA%n", GRADE);
+        }
     }
 
     // --- Promotions
