@@ -13,6 +13,12 @@ import java.util.UUID;
  */
 public class Employee {
 
+    // Constants
+    final static double DEFAULT_BONUS = 0.00;
+    final static double BSC_BONUS = 0.10;
+    final static double MSC_BONUS = 0.20;
+    final static double PHD_BONUS = 0.35;
+
     private int id; //id needs to be set by the user not the program
     private String name;
     private double grossSalary;
