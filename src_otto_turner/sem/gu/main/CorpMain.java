@@ -16,7 +16,7 @@ public class CorpMain {
 
     // CONSTANTS
     private final double DEFAULT_DIRECTOR_BENEFIT = 5000.0;
-    private final String[] departments = {"HR", "TECH", "BUSI"};
+    private final String[] departments = {"HR", "TECHNICAL", "BUSINESS"};
 
     // MAIN MENU CONSTANTS
     private final int REGISTER = 1;
