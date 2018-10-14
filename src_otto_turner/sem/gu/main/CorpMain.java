@@ -322,7 +322,6 @@ public class CorpMain {
         Employee em = retrieveEmployee(id);
         if (em != null) {
             printUpdateMenu(em.isIntern());
-            io.println(em.isRegularEmployee());
             int option;
             do {
                 option = io.inputPositiveInteger(">>> TYPE OPTION CHOICE");
