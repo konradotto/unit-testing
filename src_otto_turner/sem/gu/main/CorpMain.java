@@ -54,6 +54,11 @@ public class CorpMain {
 
 	// --- Retrieve Employee
 
+	/**
+	 * Using the employee's unique id, retrieve the employee from the list of employees
+	 * @param id The id of the employee to be retrieved
+	 * @return The retrieved employee if it exists otherwise, NULL
+	 */
 	public Employee retrieveEmployee(int id) {
 		Employee returnEmp = null;
 		int i = 0;
@@ -75,6 +80,11 @@ public class CorpMain {
 
 	// --- Check Existing
 
+	/**
+	 * Check if an employee exists in the list of employees
+	 * @param id The id of the employee to check
+	 * @return TRUE if the employee exists, otherwise FALSE
+	 */
 	public boolean checkEmployeeExists(int id) {
 		boolean exists = false;
 		int i = 0;
@@ -89,6 +99,9 @@ public class CorpMain {
 
 	// --- Main Menu
 
+	/**
+	 * Print the main menu and take option input then execute option. Repeat until quit option is selected
+	 */
 	public void run() {
 		io.println("==<*>== WELCOME TO REUSAX CORP EMPLOYEE SYSTEM ==<*>==");
 		int option;
@@ -146,6 +159,9 @@ public class CorpMain {
 		close();
 	}
 
+	/**
+	 * Print the main menu
+	 */
 	public void printMenu() {
 		io.println(">>>");
 		io.println(">>> CHOOSE AN OPTION BELOW");
@@ -162,6 +178,10 @@ public class CorpMain {
 
 	// --- Create Employee
 
+	/**
+	 * Print menu and allow user to select what type of user to create
+	 * @return The created employee or null if the desired entered id matches an existing employee
+	 */
 	public Employee registerEmployee() {
 		Employee employee = null;
 		int option;
@@ -207,6 +227,9 @@ public class CorpMain {
 		return employee;
 	}
 
+	/**
+	 * Print the register employee menu
+	 */
 	public void printEmployeeRegisterMenu() {
 		io.println(">>> CHOOSE WHAT TYPE OF EMPLOYEE YOU WISH TO ADD");
 		io.println(">>> 1. REGULAR EMPLOYEE");
@@ -216,12 +239,23 @@ public class CorpMain {
 		io.println(">>>");
 	}
 
+	/**
+	 * Create an intern employee
+	 * @param name The name of the employee
+	 * @param basicGrossSalary The gross salary of the employee
+	 * @param id The employee's unique id
+	 * @return The created intern
+	 */
 	public Intern createIntern(String name, double basicGrossSalary, int id) {
 		GPA gpa = readGPA();
 		Intern intern = new Intern(name, basicGrossSalary, id, gpa);
 		return intern;
 	}
 
+	/**
+	 * Read a gpa and check thats within the required bounds
+	 * @return The entered and validated gpa
+	 */
 	public GPA readGPA() {
 		GPA gpa = null;
 		while (gpa == null) {
@@ -236,12 +270,26 @@ public class CorpMain {
 		return gpa;
 	}
 
+	/**
+	 * Create a manager employee
+	 * @param name The name of the employee
+	 * @param basicGrossSalary The gross salary of the employee
+	 * @param id The employee's unique id
+	 * @return The created manager
+	 */
 	public Manager createManager(String name, double basicGrossSalary, int id) {
 		DegreeType degree = retrieveDegreeType();
 		Manager manager = new Manager(name, basicGrossSalary, id, degree);
 		return manager;
 	}
 
+	/**
+	 * Create a director employee
+	 * @param name The name of the employee
+	 * @param basicGrossSalary The gross salary of the employee
+	 * @param id The employee's unique id
+	 * @return The created director
+	 */
 	public Director createDirector(String name, double basicGrossSalary, int id) {
 		DegreeType degree = retrieveDegreeType();
 		Department department = retrieveDepartment();
@@ -249,6 +297,10 @@ public class CorpMain {
 		return director;
 	}
 
+	/**
+	 * Take input of a degree and match it to the degree enum
+	 * @return The degree classification matched to the input of the user
+	 */
 	public DegreeType retrieveDegreeType() {
 		DegreeType degree;
 		do {
@@ -262,6 +314,10 @@ public class CorpMain {
 		return degree;
 	}
 
+	/**
+	 * Take input of a department and match it to the department enum
+	 * @return The department matched to the input of the user
+	 */
 	public Department retrieveDepartment() {
 		Department department;
 		do {
@@ -280,6 +336,9 @@ public class CorpMain {
 
 	// --- Remove Employee
 
+	/**
+	 * Attempt to remove a employee from the list of employees using an entered id
+	 */
 	public void removeEmployee() {
 		int id = io.inputPositiveInteger(">>> ENTER THE ID OF THE EMPLOYEE TO DELETE");
 		int index = io.NO_SELECTION;
@@ -301,6 +360,9 @@ public class CorpMain {
 
 	// --- Set Director Benefits
 
+	/**
+	 * Set the director benefits which affect their salary
+	 */
 	public void setDirectorBenefits() {
 		double benefit = io.inputDouble(">>> ENTER NEW BENEFIT AMOUNT");
 		Director.setBenefit(benefit);
@@ -308,6 +370,9 @@ public class CorpMain {
 
 	// --- Update Employee Information
 
+	/**
+	 * Print a menu and update an employees information. The information being updated is based on the option selected by the user.
+	 */
 	public void updateInfo() {
 		int id = io.inputPositiveInteger(">>> PLEASE ENTER THE ID OF THE EMPLOYEE YOU WANT TO UPDATE");
 		Employee em = retrieveEmployee(id);
@@ -348,6 +413,10 @@ public class CorpMain {
 		}
 	}
 
+	/**
+	 * Print the menu for updating info. Print additional info if the employee is an intern
+	 * @param isIntern If the employee being updated is an intern
+	 */
 	public void printUpdateMenu(boolean isIntern) {
 		io.println(">>> PLEASE SELECT AN OPTION BELOW");
 		io.println(">>>");
@@ -360,6 +429,9 @@ public class CorpMain {
 
 	// --- Promotions
 
+	/**
+	 * Change an employee type (intern, manager, regular employee or director) for another.
+	 */
 	public void promote() {
 		int id = io.inputPositiveInteger(">>> ENTER EMPLOYEE ID NUMBER");
 		Employee em = retrieveEmployee(id);
@@ -421,6 +493,9 @@ public class CorpMain {
 		}
 	}
 
+	/**
+	 * Print the promotion menu
+	 */
 	public void printPromotionMenu() {
 		io.println(">>> SELECT AN OPTION BELOW");
 		io.println(">>>");
@@ -431,6 +506,11 @@ public class CorpMain {
 		io.println(">>>");
 	}
 
+	/**
+	 * Promote the employee to a manager
+	 * @param em The existing employee
+	 * @param degree The degree classification required to become a manager
+	 */
 	public void promoteToManager(Employee em, DegreeType degree) {
 		String name = em.getName();
 		double basicGrossSalary = em.getBasicGrossSalary();
@@ -440,6 +520,12 @@ public class CorpMain {
 		employees.add(new Manager(name, basicGrossSalary, id, degree));
 	}
 
+	/**
+	 * Promote the employee to a director
+	 * @param em The existing employee
+	 * @param deg The degree classification required to become a director
+	 * @param dep The department required to become a director
+	 */
 	public void promoteToDirector(Employee em, DegreeType deg, Department dep) {
 		String name = em.getName();
 		double basicGrossSalary = em.getBasicGrossSalary();
@@ -449,6 +535,11 @@ public class CorpMain {
 		employees.add(new Director(name, basicGrossSalary, id, deg, dep));
 	}
 
+	/**
+	 * Promote the employee to an intern
+	 * @param em The existing employee
+	 * @param gpa The gpa required to become an intern
+	 */
 	public void promoteToIntern(Employee em, GPA gpa) {
 		String name = em.getName();
 		double basicGrossSalary = em.getBasicGrossSalary();
@@ -458,6 +549,10 @@ public class CorpMain {
 		employees.add(new Intern(name, basicGrossSalary, id, gpa));
 	}
 
+	/**
+	 * Promote the employee to a regular employee
+	 * @param em The existing employee
+	 */
 	public void promoteToRegularEmployee(Employee em) {
 		String name = em.getName();
 		double basicGrossSalary = em.getBasicGrossSalary();
