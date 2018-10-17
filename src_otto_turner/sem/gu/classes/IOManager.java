@@ -28,6 +28,11 @@ public class IOManager extends PrintStream {
 
     // --- Input Primitives
 
+    /**
+     * Print out a message to console then take an integer input
+     * @param message The message to be printed to give the input context
+     * @return The positive input
+     */
     public int inputPositiveInteger(String message) {
         int inputInt = NO_SELECTION; // Set default values
         while (inputInt == NO_SELECTION) {
@@ -51,6 +56,11 @@ public class IOManager extends PrintStream {
         return inputInt;
     }
 
+    /**
+     * Print out a message to console then take a double input
+     * @param message The message to be printed to give the input context
+     * @return The double input
+     */
     public double inputDouble(String message) {
         double inputDouble = NO_SELECTION; // Set default values
         while (inputDouble == NO_SELECTION) {
@@ -74,6 +84,11 @@ public class IOManager extends PrintStream {
         return inputDouble;
     }
 
+    /**
+     * Print out a message to console then take a string input
+     * @param message The message to be printed to give the input context
+     * @return The string input
+     */
     public String inputString(String message) {
         String inputString = ""; // Set default value
         while (inputString.equals("")) {
