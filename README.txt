@@ -1,13 +1,10 @@
-Konrad:
+tasks to do:
 
-Basic implementation of the salary schemes and employee classes.
-Functionality for changing the type of an employee (Task 5)
-
-Jack:
-IOManager
-
-Main class - text-based menu, 
-	     creation of employees, 
-	     update employee details basic functionality, 
-	     removing an employee,
-             set director benefits
+- come up with example (probably addition with different test scenarios)
+- come up with exercise (probably not very trivial, with some bugs that we test here but release only the source code for them (at first)
+	- clone git repo
+	- set up junit
+	- write actual tests (~30mins)
+	- evaluation (who did what, what did they find, what is a good test...)
+	
+- show mocking if interested and we have time (if we have classes, it should be fairly easy to add)
