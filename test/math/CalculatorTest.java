@@ -47,4 +47,19 @@ public class CalculatorTest {
         assertEquals(expected, actual, "Integer.MAX_VaLUE + INTEGER.MIN_VALUE should add up to " + expected + " but is " + actual);
     }
 
+    @Test
+    void testDoublePrecision() {
+        double term1 = Math.pow(Math.PI, 2);
+        double term2 = Math.pow(Math.pow(Math.PI, 6), 1.0/3.0);
+        assertEquals(term1, term2, "The two passed terms should be mathematically identical");
+    }
+
+    @Test
+    void testDoublePrecisionNumeric() {
+        double term1 = Math.pow(Math.PI, 2);
+        double term2 = Math.pow(Math.pow(Math.PI, 6), 1.0/3.0);
+        double delta = 1e-8;
+        assertEquals(term1, term2, delta, "The two passed terms should be numerically identical");
+    }
+
 }
