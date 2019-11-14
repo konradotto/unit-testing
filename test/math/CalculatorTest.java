@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
 
-    private final Calculator calculator = new Calculator();
-
-    @BeforeEach
-
+    private Calculator calculator;
+    
+    @Before
+    public void init(){
+        calculator = new Calculator();
+    }
 
     @Test
     void testAdditionWithPositives() throws IntegerOverflowException {
@@ -23,7 +25,9 @@ public class CalculatorTest {
 
     @Test
     void testAdditionWithNegatives() throws IntegerOverflowException {
-        assertTrue(calculator.add(-1,-2) < 0);
+        int threshold = 0;
+        int actual = calculator.add(-1,-2);
+        assertTrue(actual < threshold);
     }
 
     @Test
